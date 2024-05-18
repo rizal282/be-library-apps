@@ -12,10 +12,10 @@ public class Inventory
     public int Id { get; set; }
 
     [Column("nama_rak")]
-    public String? NamaRak { get; set; }
+    public String NamaRak { get; set; }
 
     [Column("deskripsi")]
-    public String? Deskripsi { get; set; }
+    public String Deskripsi { get; set; }
 
-    // public Buku? Buku { get; set; }
+    public ICollection<Buku>? Buku { get; set; }
 }

@@ -55,6 +55,8 @@ namespace apilibraryapps.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LokasiRak");
+
                     b.ToTable("buku");
                 });
 
@@ -160,6 +162,17 @@ namespace apilibraryapps.Migrations
                     b.ToTable("transaksi_buku");
                 });
 
+            modelBuilder.Entity("apilibraryapps.Models.Buku", b =>
+                {
+                    b.HasOne("apilibraryapps.Models.Inventory", "Inventory")
+                        .WithMany("Buku")
+                        .HasForeignKey("LokasiRak")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventory");
+                });
+
             modelBuilder.Entity("apilibraryapps.Models.TransaksiBuku", b =>
                 {
                     b.HasOne("apilibraryapps.Models.Buku", "Buku")
@@ -182,6 +195,11 @@ namespace apilibraryapps.Migrations
             modelBuilder.Entity("apilibraryapps.Models.Buku", b =>
                 {
                     b.Navigation("TransaksiBukus");
+                });
+
+            modelBuilder.Entity("apilibraryapps.Models.Inventory", b =>
+                {
+                    b.Navigation("Buku");
                 });
 
             modelBuilder.Entity("apilibraryapps.Models.Mahasiswa", b =>

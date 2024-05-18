@@ -1,4 +1,5 @@
 using apilibraryapps.Data;
+using apilibraryapps.Data.Response;
 using apilibraryapps.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,12 @@ public class MahasiswaController : ControllerBase
     [HttpGet("getallmahasiswa")]
     public async Task<ActionResult> GetAllMahasiswa()
     {
-        var listMhs = await _context.Mahasiswas.ToListAsync();
+        var listMhs = await _context.Mahasiswas.Select(mhs => new DataMahasiswaResponse {
+            NimMhs = mhs.NimMhs,
+            NamaMhs = mhs.NamaMhs,
+            Jurusan = mhs.Jurusan,
+            StsAktif = mhs.AktifFlag ? "Aktif" : "Tidak Aktif",
+        }).ToListAsync();
         return Ok(listMhs);
     }
 

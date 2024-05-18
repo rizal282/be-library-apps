@@ -1,4 +1,5 @@
 using apilibraryapps.Data;
+using apilibraryapps.Data.Response;
 using apilibraryapps.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,19 @@ public class BukuController : ControllerBase
     }
 
     [HttpGet("getallbuku")]
-    public async Task<IEnumerable<Buku>> GetAllBuku()
+    public async Task<ActionResult> GetAllBuku()
     {
-        return await _context.Bukus.ToListAsync();
+        var dataBuku = await _context.Bukus
+            .Include(buku => buku.Inventory)
+            .Select(buku => new DataBukuResponse {
+                NamaBuku = buku.NamaBuku,
+                JenisBuku =  buku.JenisBuku,
+                Penerbit = buku.Penerbit,
+                StokBuku = buku.StokBuku,
+                LokasiBuku = buku.Inventory!.NamaRak!
+            }).ToListAsync();
+
+        return Ok(dataBuku);
     }
 
     [HttpPost("createbuku")]

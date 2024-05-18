@@ -28,5 +28,11 @@ public class AppDbContext : DbContext
             .HasOne(tb => tb.Mahasiswa)
             .WithMany(s => s.TransaksiBukus)
             .HasForeignKey(fk => fk.IdMhs);
+
+        modelBuilder.Entity<Inventory>()
+            .HasMany(a => a.Buku)
+            .WithOne(b => b.Inventory)
+            .HasForeignKey(b => b.LokasiRak);
+        
     }
 }

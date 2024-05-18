@@ -26,5 +26,7 @@ public class Buku
     [Column("stok_buku")]
     public long StokBuku { get; set; }
 
+    public Inventory? Inventory{ get; set; }
+
     public ICollection<TransaksiBuku>? TransaksiBukus { get; set; }
 }
